@@ -1,0 +1,25 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}后台管理{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block main %}
+    <ul>
+        {% for contribute in contributes %}
+            <li>
+                <div class="contribute-group">
+                    <p class="contribute-title">{{ contribute.title }}</a></p>
+                    <p class="contribute-content">{{ contribute.content }}</p>
+                    <div class="contribute-info">
+                        <span class="contribute-poet">{{ contribute.poet }}</span>
+                    </div>
+                    <p class="contribute-manage"><a href="{{ url_for('contribute_manage',contribute_id=contribute.id)
+                    }}">编辑</a></p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

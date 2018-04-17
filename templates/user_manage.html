@@ -1,0 +1,29 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}编辑用户{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contribute.css') }}">
+{% endblock %}
+
+{% block main %}
+    <h3 class="page-title">编辑用户</h3>
+    <form action="" method="post">
+        <div class='form-container'>
+            <div class="form-group">
+                <input type="text" value={{ user.telephone }} name="telephone"
+                        class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" value={{ user.username }} name="username"
+                        class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" value={{ user.password }} name="password"
+                        class="form-control">
+            </div>
+                <button class="btn btn-primary">提交修改</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

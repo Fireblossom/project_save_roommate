@@ -1,0 +1,23 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}用户管理{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block main %}
+    <ul>
+        {% for user in users %}
+            <li>
+                <div class="user-group">
+                    <p class="user-tele">电话： {{ user.telephone }}</a></p>
+                    <p class="user-username">账号： {{ user.username }}</p>
+                    <p class="user-password">密码： {{ user.password }}</p>
+                    <p class="user-manage"><a href="{{ url_for('user_manage',user_id=user.id)
+                    }}">编辑</a></p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
