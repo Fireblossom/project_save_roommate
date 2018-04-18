@@ -191,6 +191,36 @@ def user_manage(user_id):
         db.session.commit()
         return redirect(url_for('user_list'))
 
+@app.route('/user_delete/<user_id>/')
+@login_required
+def user_delete(user_id):
+    if session['user_id'] != 1:
+        return u'权限不足！'
+    else:
+        Star.query.filter(Star.author_id == user_id).delete()
+        Answer.query.filter(Answer.author_id == user_id).delete()
+        contribute = Contribute.query.filter(Contribute.author_id == user_id).all()
+        for i in contribute:
+            Answer.query.filter(Answer.contribute_id == i.id).delete()
+        Contribute.query.filter(Contribute.author_id == user_id).delete()
+        User.query.filter(User.id == user_id).delete()
+        db.session.commit()#级联一直改不对，直接硬删吧，管他优雅不优雅
+        return redirect(url_for('user_list'))
+
+
+@app.route('/contribute_delete/<contribute_id>/')
+@login_required
+def contribute_delete(contribute_id):
+    if session['user_id'] != 1:
+        return u'权限不足！'
+    else:
+        Star.query.filter(Star.contribute_id == contribute_id).delete()
+        Answer.query.filter(Answer.contribute_id == contribute_id).delete()
+        Contribute.query.filter(Contribute.id == contribute_id).delete()
+        db.session.commit()#同上
+        return redirect(url_for('manage'))
+
+
 @app.route('/add_answer/', methods=['POST'])
 @login_required
 def add_answer():
