@@ -1,0 +1,39 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}评论管理-{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detail.css') }}">
+
+{% endblock %}
+
+{% block main %}
+    <h3 class="page-title">{{ contribute.title }}</h3>
+    <p class="contribute-info">
+        <sqan>投稿者： {{ contribute.author.username }}</sqan>
+    </p>
+
+    <p class="poet-info">
+        <sqan>作者： {{ contribute.poet }} 朝代： {{ contribute.dynasty }}
+        </sqan>
+    </p>
+
+    <hr>
+    <p class="pre-text">{{ contribute.content }}</p>
+    <hr>
+    <h4>评论： </h4>
+    <ul class="answer-list">
+        {% for answer in contribute.answers %}
+            <li>
+                <div class="user-info">
+                    <img src="{{ url_for('static', filename='images/qingwalogo.jpg') }}" alt=""
+                            class="avatar">
+                    <span class="username">{{ answer.author.username }}</span>
+                    <span class="create-time">{{ answer.create_time }}</span>
+                </div>
+                <p class="answer-content">{{ answer.content }}</p>
+                <p class="answer-delete"><a href="{{ url_for('answer_delete',answer_id=answer.id) }}">删除</a></p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

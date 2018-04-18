@@ -155,6 +155,24 @@ def detail(contribute_id):
     else:
         return render_template('detail.html', contribute=contribute_model)
 
+@app.route('/detail_manage/<contribute_id>/')
+@login_required
+def detail_manage(contribute_id):
+    contribute_model = Contribute.query.filter(Contribute.id == contribute_id).first()
+    return render_template('detail_manage.html', contribute=contribute_model)
+
+@app.route('/answer_delete/<answer_id>/')
+@login_required
+def answer_delete(answer_id):
+    if session['user_id'] != 1:
+        return u'权限不足！'
+    else:
+        ans = Answer.query.filter(Answer.id == answer_id).first()
+        id = ans.contribute_id#巨不优雅
+        Answer.query.filter(Answer.id == answer_id).delete()
+        db.session.commit()
+        return redirect(url_for('detail_manage', contribute_id=id))
+
 @app.route('/contribute_manage/<contribute_id>/', methods=['GET', 'POST'])
 @login_required
 def contribute_manage(contribute_id):
